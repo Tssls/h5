@@ -1,0 +1,136 @@
+.item-list{
+    background-color: #fff;
+    margin-top: 0.2rem;
+    border-radius: 0.134rem;
+    box-shadow: 0 0.02667rem 0.08rem 0 rgb(0 0 0 / 8%);
+    padding: 0.34rem 0.21rem 0.186rem;
+}
+
+.item-list-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-list-title > span:last-child{
+    color: #666;
+    font-size: 0.134rem;
+}
+
+.item-list-title > span:first-child{
+    color: #666;
+    font-size: 0.24rem;
+    width: 3.36rem;
+    height: 0.32rem;
+    line-height: .32rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.list-main{
+    padding: 0.13333rem 0.16rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0.05333rem;
+    border: 1px solid #eee;
+    background-color: hsla(0,0%,100%,.4);
+    margin-top: 0.08rem;
+    align-items: center;
+}
+
+.list-main-box{
+    color: #999;
+    font-size: .13333rem;
+    max-width: 2.68rem;
+}
+
+.main-box-text{
+    display: flex;
+    align-items: center;
+}
+
+.main-box-text > span:nth-child(2){
+    background-color: #999;
+    width: 1px;
+    height: .13333rem;
+    margin: 0 0.05rem;
+    transform: scaleX(0.5);
+}
+
+
+.list-main-btn{
+    width: 0.93333rem;
+    height: 0.29333rem;
+    font-size: .13333rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    background-color: #00b578;
+    justify-content: center;
+    border-radius: 0.14667rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.list-main-btn>img{
+    width: 0.2rem;
+    height: 0.18rem;
+}
+
+.modal-style{
+    width: 90vw !important;
+    text-align: center;
+}
+
+.adm-modal-wrap{
+    width: 90vw !important;
+}
+
+.modal-text > p:nth-child(2){
+    font-size: .21333rem;
+    color: #333;
+    font-weight: 700;
+    margin:0 !important;
+}
+
+.modal-text > p:nth-child(4){
+    color: #666;
+    font-size: .16rem;
+    margin-top: 0.21333rem
+}
+
+.modal-text > a:nth-child(3){
+    margin-top: 0.02667rem;
+    font-size: .29333rem;
+    color: #00b578;
+    font-weight: 500;
+    line-height: .41333rem;
+    margin-bottom: 0 !important;
+}
+
+.modal-text > button:nth-child(5){
+    width: 100%;
+    height: 0.53333rem;
+    font-size: .18667rem;
+    border-radius: 0.26667rem;
+    font-weight: 500;
+    background-color: #00b578;
+    color: #fff;
+    margin-top: 0.13333rem;
+    border: none;
+}
+
+.modal-text > img:first-child{
+    width: 1.50667rem;
+    height: 0.93333rem;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%,-50%);
+}
+
+.adm-modal-body .adm-modal-content{
+    padding-top: 0.68rem;
+}
