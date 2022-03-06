@@ -1,44 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="format-detection" content="telephone=yes"/>
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>附件门店</title>
-    <style>
-      body{
-        overflow: hidden;
-      }
-      #root{
-        max-width: 500px;
-        margin: 0 auto;
-      }
-    </style>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
-  <script type="text/javascript">
-      function inMobile() {
-        let bodyWidth = document.body.clientWidth;
-        if(bodyWidth >500){
-          bodyWidth = 500
-        }
-        document.getElementsByTagName('html')[0].style.fontSize = (bodyWidth / 500) * 100 + 'px';
-      }
-      document.addEventListener('DOMContentLoaded', inMobile);
-      window.onresize = inMobile;
-  </script>
-  <!-- <script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script> -->
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=yes" />
+  <meta name="description" content="Web site created using create-react-app" />
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RaD0EbdQKxU9KOOuKAMGYTZbtKAg3pjO"></script>
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <title>附件门店</title>
+  <style>
+    body {
+      overflow: hidden;
+    }
+
+    #root {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+</body>
+<script type="text/javascript">
+  function inMobile() {
+    let bodyWidth = document.body.clientWidth;
+    if (bodyWidth > 500) {
+      bodyWidth = 500
+    }
+    document.getElementsByTagName('html')[0].style.fontSize = (bodyWidth / 500) * 100 + 'px';
+  }
+  document.addEventListener('DOMContentLoaded', inMobile);
+  window.onresize = inMobile;
+
+  var geolocation = new window.BMap.Geolocation();
+  geolocation.getCurrentPosition(function (r) {
+    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+      var mk = new window.BMap.Marker(r.point);
+      console.log(r.point);
+      window.lat = r.point.lat;   //window.lat是在其他页面设置的全局变量
+      window.lng = r.point.lng;   //window.lng是在其他页面设置的全局变量
+    }
+    else {
+      alert('failed' + this.getStatus());
+    }
+  }, { enableHighAccuracy: true });
+
+</script>
+<!-- <script type="text/javascript" src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script> -->
+
 </html>

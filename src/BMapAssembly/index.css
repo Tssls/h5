@@ -1,0 +1,13 @@
+.title{
+    display: flex;
+    align-items: center;
+    padding-left: 0.1rem;
+    /* background-color: #00b578; */
+    margin: 0;
+    height: 0.5rem;
+}
+
+.title > img{
+    width: 0.25rem;
+    height: 0.25rem;
+}

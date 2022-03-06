@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { InfiniteScroll, List, SearchBar, Button } from 'antd-mobile'
-import {Map, Marker, NavigationControl, InfoWindow,MapTypeControl} from 'react-bmapgl';
-import ItemList from './itemList';
-import './App.css';
-// const wx = require('http://res2.wx.qq.com/open/js/jweixin-1.6.0.js')
-// import images from '../public/images/微信图片_20210116215200'
+import { List, SearchBar, Button } from 'antd-mobile'
+import ItemList from '../itemList';
+import './index.css';
 
-const JSON_DATA = require('./index.json');
+const JSON_DATA = require('../index.json');
 
-function App() {
+function Home() {
   const elementRef = useRef(null);
   const [defaultData, setDetaultData] = useState([])
   const [data, setData] = useState([])
   const [searchValue, setValue] = useState('')
   const [acount, setAcount] = useState(1)
-
-  // let icon1 = new BMapGL.Icon(images, new BMapGL.Size(20, 20))
 
   const doSearch =() => {
     elementRef.current.scrollTop = 0
@@ -28,8 +23,6 @@ function App() {
   }
 
   useEffect(() => {
-    // let map = new Map();
-    // console.log(map)
     setDetaultData(JSON_DATA.data)
   }, [])
 
@@ -97,4 +90,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
