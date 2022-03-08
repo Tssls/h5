@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd-mobile'
 import { useHistory } from 'react-router-dom';
+
+import { BTN_ICON,  } from '../mock/icon'
+import MODAL_ICON from '../image/1.png'
+
 import './index.css'
-
-
-const BTN_ICON = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAAXNSR0IArs4c6QAAActQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Sem/EQAAAJh0Uk5TAAECAwQFBwgJCgsMDg8QERMUFxkbHB0fICIlKiwvMDEzNTY3OTxDSElLTE1OUVJTVFdYWl5fYWJlZmdpa21ucXN0dnh5ent8gIGCg4SGiImMjY6PkJKVlpydn6Klp6ipqq2wsbO2uLu9v8HCxcbHyMnLzdDR09TV19jZ2t3f4OHi5OXm5+jp6uvt7u/x8vP09vf4+fr8/f4sZxqlAAAB5klEQVQYGe3B+UOLcRwH8HctHTMmV44VYY65yn2tkisRIkImx4Y5IkcpsTSSwrOt4f3nKszzeZ49z/f5+pnXC/+uNccuJ1P5zNRAvDUEbaGOEQqp7tXQUXODdt9jy+HFfypLB/mLASjVvKCLwWVQqH9PV+Pr4CqSoUK2AS5qDSrl6uGo+jU9pKrhwJekp7s+FNtPDUdQxP+OGiYDsGujlhOwCRrUMhmA1R5qOgyrBDUlYRHMU9O0H9JOatsI6TS1nYcUo7YEpH5q64P0kVJv+FCGf8TC0RxNQ5A+UUjPAc6w4G0ZcI6mcUhjFJ4A2MyCmwAO0pSFNEzhDYDFLDgOoI2mUUhPKXxdAOARf8mHANyi6QGkOKVdAFbm+FM7gEqDph5IRyk9KwFQN0gyEy0B0EyhHVKYFvsww1e7e/08zFg0QSECqTxHKbsWpoqHFD6Xw+IeLb5EULDwMaXrsNpKm94QZs1vmaJFI6xKR2g3FLtwJZmnVboSNk3UcgB2c9PUMFyGIhuooQEOuunpKpxUvaKH/go4ilLtw1I420alsTq42E6V50vgZi8VEgG4aqWr0UYodNKFcbIKKj10Mn17hx9qXSyYuNbZcSl2py/e1bQpCE+rvnHWy7PhUvydLQPG/ZYV+O+3H3+BhxX5QOtgAAAAAElFTkSuQmCC';
 
 export default function ItemList(props) {
     let history = useHistory();
-    const { name, distance, timer, address } = props
+    const { name, distance, timer, address,coordinate,ipone } = props
     const [isModal, setModal] = useState(false)
-    const [ipone, setIpone] = useState('166-2080-9433')
     
     const historyLink = (event) => {
         event.stopPropagation();
-        history.push('/map')
+        history.push(`/map?name=${name}&address=${address}&lat=${coordinate.lat}&lng=${coordinate.lng}&gdLon=${coordinate.gdLon}&gdLat=${coordinate.gdLat}`)
     }
 
     const showModal = (event) => {
@@ -23,9 +23,9 @@ export default function ItemList(props) {
     }
     
     const renderModalContext = () => (<div className='modal-text'>
-        <img src="https://oss-static.relxtech.com/h5/relx-map/static/anquan.687b832a.png" alt="" />
+        <img src={MODAL_ICON} alt="" />
         <p>欢迎随时致电门店咨询</p>
-        <a href={`tel:${ipone}`}>168-1686-16888</a>
+        <a href={`tel:${ipone}`}>{ipone}</a>
         <p>悦刻为保护双方隐私安全，号码已做加密处理</p>
         <button onClick={()=>{setModal(false)}}>我知道了</button>
     </div>)

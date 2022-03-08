@@ -27,26 +27,6 @@
   --border-bottom:none !important;
 }
 
-.header {
-  padding: 0.16rem;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  position: sticky;
-  z-index: 10;
-  top: 0;
-  left: 0;
-  border-radius: 0.08rem;
-}
-
-.left {
-  flex: auto;
-}
-.right {
-  flex: none;
-  padding-left: 0.16rem;
-}
-
 .placeholder {
   padding-top: 30vh;
   text-align: center;
@@ -69,14 +49,32 @@
   font-size: 0.18rem;
   width: 100%;
   font-weight: 500;
-  margin-bottom: 0.4rem;
+  height: 0.8rem;
+}
+.header {
+  padding: 0.16rem;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  border-radius: 0.08rem;
 }
 
-.Map{
-  height: 100%;
-  width: 100%;
+.header-btn{
+  width: 0.9rem;
+  margin-left: 0.15rem;
+  height: 0.4rem;
+}
+.adm-input{
+  flex: 1;
+  background-color: #fafafa;
+  border-radius: 0.18rem;
+  padding: 0 0.15rem;
 }
 
-#container{
-  height: 100%;
+.adm-input-element{
+  height: 0.5rem;
 }

@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 
 const BMap = window.BMap;
 
-function MapView() {
+function MapView(props) {
     useEffect(() => {
         getMap()
-    }, [window.lng, window.lat])
+    }, [props])
     const getMap = () => {
         var map = new BMap.Map("container");
-        var point = new BMap.Point(window.lng, window.lat);
+        var point = new BMap.Point(props.lng, props.lat);
+        var mk = new BMap.Marker(point);
+        map.addOverlay(mk)
         map.centerAndZoom(point, 17);
         map.enableScrollWheelZoom(true);
     };
