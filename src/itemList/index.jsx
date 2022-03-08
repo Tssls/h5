@@ -4,12 +4,13 @@ import { useHistory } from 'react-router-dom';
 
 import { BTN_ICON,  } from '../mock/icon'
 import MODAL_ICON from '../image/1.png'
+import {time_range} from '../utils'
 
 import './index.css'
 
 export default function ItemList(props) {
     let history = useHistory();
-    const { name, distance, timer, address,coordinate,ipone } = props
+    const { name, distance, startTime,endTime, address,coordinate,ipone } = props
     const [isModal, setModal] = useState(false)
     
     const historyLink = (event) => {
@@ -39,9 +40,9 @@ export default function ItemList(props) {
             <div onClick={historyLink} className='list-main'>
                 <div className='list-main-box'>
                     <p className='main-box-text'>
-                        <span>营业中</span>
+                        <span style={{color:`${time_range(startTime,endTime) ? '#00b578' :''}`}}>{time_range(startTime,endTime) ? '营业中':'休息中'}</span>
                         <span></span>
-                        <span>{timer}</span>
+                        <span>{`${startTime} - ${endTime}`}</span>
                     </p>
                     <p>{address}</p>
                 </div>

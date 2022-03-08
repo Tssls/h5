@@ -51,10 +51,14 @@
     align-items: center;
 }
 
+.main-box-text > span:first-child{
+    font-weight: 600;
+}
+
 .main-box-text > span:nth-child(2){
     background-color: #999;
     width: 1px;
-    height: .13333rem;
+    height: .134rem;
     margin: 0 0.05rem;
     transform: scaleX(0.5);
 }
