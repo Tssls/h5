@@ -10,6 +10,7 @@
   <meta name="format-detection" content="telephone=yes" />
   <meta name="description" content="Web site created using create-react-app" />
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=RaD0EbdQKxU9KOOuKAMGYTZbtKAg3pjO"></script>
+  <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=420886c4fb5f0f06488f6b65d9b5a70f"></script> 
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
   <title>附件门店</title>
@@ -52,6 +53,9 @@
       alert('failed' + this.getStatus());
     }
   }, { enableHighAccuracy: true });
+  window._AMapSecurityConfig = {
+      securityJsCode:'eea3b9337be3295dfc8bd33696d061dc',
+  } 
 
 </script>
 

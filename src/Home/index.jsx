@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { List, Button,Input } from 'antd-mobile'
+import { List, Button, Input, DotLoading } from 'antd-mobile'
 import ItemList from '../itemList';
 import './index.css';
-
+import { bMapTransqqMap } from '../utils';
 const JSON_DATA = require('../mock/index.json');
 const list = JSON.parse(JSON.stringify(JSON_DATA.data))
 
 function Home() {
   const [defaultData, setDetaultData] = useState([])
+  const [distanceList,setDistanceList] = useState([])
   const [data, setData] = useState([])
   const [searchValue, setValue] = useState('')
   const [dom, setDom] = useState(HTMLDivElement | null);
+  const [loading, setLoading] = useState(true);
 
   const doSearch = () => {
     dom.scrollTop = 0
@@ -23,9 +25,23 @@ function Home() {
   }
 
   useEffect(() => {
-    setDetaultData(list)
-  }, [])
-
+    setTimeout(() => {
+      const gdMap = bMapTransqqMap(window.lat, window.lng)
+      const arr = distanceList.map((item) => {
+        let dis = Math.floor(window.AMap.GeometryUtil.distance([gdMap.bd_lon, gdMap.bd_lat], [item.coordinate.gdLon, item.coordinate.gdLat]));
+        console.log('dis', typeof dis)
+        if (dis >= 1000) {
+          dis = (dis / 1000).toFixed(2) + 'km'
+        } else {
+          dis = dis + 'm'
+        }
+        item.distance = dis
+        return item;
+      })
+      setDetaultData(arr);
+      setLoading(false)
+    }, 1500)
+  }, [distanceList])
 
   useEffect(() => {
     if (defaultData.length > 0) {
@@ -34,6 +50,10 @@ function Home() {
       setData([])
     }
   }, [defaultData])
+
+  useEffect(() => {
+    setDistanceList(list)
+  }, [])
 
 
   const handleOnScroll = () => {
@@ -51,16 +71,23 @@ function Home() {
     setValue(e)
   }
 
+  if (loading) {
+    return (<div className='loading' style={{ color: '#00b578' }}>
+      <DotLoading color='currentColor' />
+      <span>加载中...</span>
+    </div>)
+  }
+
   return (
     <div className="App" >
       <div onScrollCapture={handleOnScroll} ref={(dom) => {
         setDom(dom);
       }} className='box-scroll'>
         <div className="header">
-            <Input onChange={searchChange} value={searchValue} placeholder='请输入店铺名称' clearable />
-            <Button className='header-btn' size='small' color='primary' onClick={doSearch}>
-              搜索
-            </Button>
+          <Input onChange={searchChange} value={searchValue} placeholder='请输入店铺名称' clearable />
+          <Button className='header-btn' size='small' color='primary' onClick={doSearch}>
+            搜索
+          </Button>
         </div>
         <List>
           {data.map((item, index) => (
