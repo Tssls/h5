@@ -12,7 +12,6 @@ export default function ItemList(props) {
     let history = useHistory();
     const { name, distance, startTime,endTime, address,coordinate,ipone } = props
     const [isModal, setModal] = useState(false)
-    
     const historyLink = (event) => {
         event.stopPropagation();
         history.push(`/map?name=${name}&address=${address}&lat=${coordinate.lat}&lng=${coordinate.lng}&gdLon=${coordinate.gdLon}&gdLat=${coordinate.gdLat}`)
@@ -40,7 +39,7 @@ export default function ItemList(props) {
             <div onClick={historyLink} className='list-main'>
                 <div className='list-main-box'>
                     <p className='main-box-text'>
-                        <span style={{color:`${time_range(startTime,endTime) ? '#00b578' :''}`}}>{time_range(startTime,endTime) ? '营业中':'休息中'}</span>
+                        <span style={{color:`${time_range(startTime,endTime) ? '#142A48' :''}`}}>{time_range(startTime,endTime) ? '营业中':'休息中'}</span>
                         <span></span>
                         <span>{`${startTime} - ${endTime}`}</span>
                     </p>
