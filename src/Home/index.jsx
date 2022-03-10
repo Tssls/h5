@@ -28,15 +28,12 @@ function Home() {
     setTimeout(() => {
       const gdMap = bMapTransqqMap(window.lat, window.lng)
       const arr = distanceList.map((item) => {
-        let dis = Math.floor(window.AMap.GeometryUtil.distance([gdMap.bd_lon, gdMap.bd_lat], [item.coordinate.gdLon, item.coordinate.gdLat]));
-        console.log('dis', typeof dis)
-        if (dis >= 1000) {
-          dis = (dis / 1000).toFixed(2) + 'km'
-        } else {
-          dis = dis + 'm'
-        }
+        let dis = Math.floor(window.AMap.GeometryUtil.distance([gdMap.bd_lon, gdMap.bd_lat], [item.coordinate.gdLon, item.coordinate.gdLat]));      
         item.distance = dis
         return item;
+      })
+      arr.sort((a, b) => {
+        return a.distance - b.distance
       })
       setDetaultData(arr);
       setLoading(false)
@@ -72,7 +69,7 @@ function Home() {
   }
 
   if (loading) {
-    return (<div className='loading' style={{ color: '#00b578' }}>
+    return (<div className='loading' style={{ color: '#142A48' }}>
       <DotLoading color='currentColor' />
       <span>加载中...</span>
     </div>)

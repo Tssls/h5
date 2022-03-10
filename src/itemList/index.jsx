@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { BTN_ICON,  } from '../mock/icon'
 import MODAL_ICON from '../image/1.png'
-import {time_range} from '../utils'
+import {time_range,getDistance} from '../utils'
 
 import './index.css'
 
@@ -35,7 +35,7 @@ export default function ItemList(props) {
         <div className="item-list">
             <div className='item-list-title'>
                 <span>{name}</span>
-                <span>{distance}</span>
+                <span>{getDistance(distance)}</span>
             </div>
             <div onClick={historyLink} className='list-main'>
                 <div className='list-main-box'>
