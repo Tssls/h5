@@ -58,7 +58,7 @@ function Home() {
       const contentScrollTop = dom.scrollTop;
       const clientHeight = dom.clientHeight;
       const scrollHeight = dom.scrollHeight;
-      if (contentScrollTop + clientHeight >= scrollHeight) {
+      if (contentScrollTop + clientHeight + 10 >= scrollHeight && data.length < defaultData.length) {
         setData(defaultData.slice(0, data.length + 10))
       }
     }
