@@ -16,7 +16,8 @@ export default function BMapAssembly() {
 
     useEffect(() => {
         setParams(parseQueryString())
-        console.log('bd_decrypt',bMapTransqqMap(window.lat,window.lng))
+        // console.log('bd_decrypt',bMapTransqqMap(window.lat,window.lng))
+        console.log(window.lat)
     },[])
 
     const barBtnCLick = (e) => {
@@ -28,7 +29,7 @@ export default function BMapAssembly() {
                 window.location.href = `https://uri.amap.com/navigation?from=${decrypt.bd_lon},${decrypt.bd_lat},我的位置&to=${urlParams.gdLon},${urlParams.gdLat},${urlParams.address}&mode=walk&policy=1&src=mypage&coordinate=gaode&callnative=0`
                 break;
             case '2':
-                window.location.href = `http://api.map.baidu.com/direction?origin=latlng:${window.lat},${window.lng}|name:我的位置&destination=${urlParams.lat},${urlParams.lng}&mode=driving&region=深圳&output=html&src=webapp.baidu.openAPIdemo`
+                window.location.href = `https://api.map.baidu.com/direction?origin=latlng:${window.lat},${window.lng}|name:我的位置&destination=${urlParams.lat},${urlParams.lng}&mode=driving&region=深圳&output=html&src=webapp.baidu.openAPIdemo`
                 break;
             // case '3':
                 // window.location.href = `https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=我的位置&fromcoord=${decrypt.bd_lat},${decrypt.bd_lon}&to=宝安中心地铁站&referer=4J2BZ-2S7LX-JUJ46-T2EJT-CZ4U6-2OFTR&coord_type=1`
