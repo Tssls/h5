@@ -8,9 +8,12 @@ import {time_range,getDistance} from '../utils'
 
 import './index.css'
 
+const week = new Date().getDay()
+// const week = 0
+
 export default function ItemList(props) {
     let history = useHistory();
-    const { name, distance, startTime,endTime, address,coordinate,ipone } = props
+    const { name, distance, startTime = '', endTime = '', address, coordinate, ipone,timer = [] } = props
     const [isModal, setModal] = useState(false)
     const historyLink = (event) => {
         event.stopPropagation();
@@ -20,6 +23,20 @@ export default function ItemList(props) {
     const showModal = (event) => {
         event.stopPropagation();
         setModal(true)
+    }
+
+    const isDoBusiness = (sta, end) => {
+        if (timer.length > 0) {
+            return time_range(timer[week].startTime,timer[week].endTime) ? '营业中':'休息中'
+        }
+        return time_range(sta,end) ? '营业中':'休息中'
+    }
+
+    const doBusinessTimer = (timer, sta, end) => {
+        if (week === props.week) {
+            return '今日休息'
+        }
+        return `${timer.length > 0 ? `${timer[week].startTime} - ${timer[week].endTime}` : `${sta} - ${end}`}`
     }
     
     const renderModalContext = () => (<div className='modal-text'>
@@ -39,9 +56,9 @@ export default function ItemList(props) {
             <div onClick={historyLink} className='list-main'>
                 <div className='list-main-box'>
                     <p className='main-box-text'>
-                        <span style={{color:`${time_range(startTime,endTime) ? '#142A48' :''}`}}>{time_range(startTime,endTime) ? '营业中':'休息中'}</span>
+                        <span style={{color:`${isDoBusiness(startTime,endTime) === '营业中' ? '#142A48' :''}`}}>{isDoBusiness(startTime,endTime)}</span>
                         <span></span>
-                        <span>{`${startTime} - ${endTime}`}</span>
+                        <span>{doBusinessTimer(timer,startTime,endTime)}</span>
                     </p>
                     <p>{address}</p>
                 </div>
