@@ -13,14 +13,15 @@ function Home() {
   const [searchValue, setValue] = useState('')
   const [dom, setDom] = useState(HTMLDivElement | null);
   const [loading, setLoading] = useState(true);
+  const [locations, setLoactions] = useState({})
 
   const doSearch = () => {
     dom.scrollTop = 0
     if (searchValue) {
-      const jsonData = list.filter(item => item.name.indexOf(searchValue) !== -1)
+      const jsonData = distanceList.filter(item => item.name.indexOf(searchValue) !== -1)
       setDetaultData(jsonData)
     } else {
-      setDetaultData(list)
+      setDetaultData(distanceList)
     }
   }
 
@@ -29,6 +30,7 @@ function Home() {
     geolocation.getCurrentPosition(function (r) {
       if (this.getStatus() == window.BMAP_STATUS_SUCCESS) {
         res(r.point)
+        return false;
       }
       else {
         rej(this.getStatus())
@@ -37,28 +39,15 @@ function Home() {
   })
 
   const getList = useCallback(() => {
-      getLocations.then(res => {
-        const { lng, lat } = res;
-        window.lng = lng;
-        window.lat = lat;
-        const gdMap = bd_decrypt(lat, lng)
-        const arr = distanceList.map((item) => {
-          let dis = Math.floor(window.AMap.GeometryUtil.distance([gdMap.bd_lon, gdMap.bd_lat], [item.coordinate.gdLon, item.coordinate.gdLat]));
-          item.distance = dis
-          return item;
-        })
-        arr.sort((a, b) => {
-          return a.distance - b.distance
-        })
-        setDetaultData(arr);
-        setLoading(false)
-      })
-  },[distanceList])
+    getLocations.then(res => {
+      const { lng, lat } = res;
+      setLoactions({ lng, lat })
+    })
+  }, [])
 
   useEffect(() => {
     getList()
-  }, [distanceList])
-
+  }, [])
 
   useEffect(() => {
     if (defaultData.length > 0) {
@@ -69,8 +58,24 @@ function Home() {
   }, [defaultData])
 
   useEffect(() => {
-    setDistanceList(list)
-  }, [])
+    if (Object.keys(locations).length > 0) {
+      const {lng,lat} = locations
+      window.lng = lng;
+      window.lat = lat;
+      const gdMap = bd_decrypt(lat, lng)
+      const arr = list.map((item) => {
+        let dis = Math.floor(window.AMap.GeometryUtil.distance([gdMap.bd_lon, gdMap.bd_lat], [item.coordinate.gdLon, item.coordinate.gdLat]));
+        item.distance = dis
+        return item;
+      })
+      arr.sort((a, b) => {
+        return a.distance - b.distance
+      })
+      setDetaultData(arr)
+      setDistanceList(arr)
+      setLoading(false)
+    }
+  }, [locations])
 
 
   const handleOnScroll = () => {
@@ -102,7 +107,7 @@ function Home() {
       }} className='box-scroll'>
         <div className="header">
           <Input onChange={searchChange} value={searchValue} placeholder='请输入店铺名称' clearable />
-          <Button className='header-btn' size='small' color='primary' onClick={doSearch}>
+          <Button className='header-btn' size='small' onClick={doSearch}>
             搜索
           </Button>
         </div>

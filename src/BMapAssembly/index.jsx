@@ -16,8 +16,6 @@ export default function BMapAssembly() {
 
     useEffect(() => {
         setParams(parseQueryString())
-        // console.log('bd_decrypt',bMapTransqqMap(window.lat,window.lng))
-        console.log(window.lat)
     },[])
 
     const barBtnCLick = (e) => {
@@ -31,9 +29,6 @@ export default function BMapAssembly() {
             case '2':
                 window.location.href = `https://api.map.baidu.com/direction?origin=latlng:${window.lat},${window.lng}|name:我的位置&destination=${urlParams.lat},${urlParams.lng}&mode=driving&region=深圳&output=html&src=webapp.baidu.openAPIdemo`
                 break;
-            // case '3':
-                // window.location.href = `https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=我的位置&fromcoord=${decrypt.bd_lat},${decrypt.bd_lon}&to=宝安中心地铁站&referer=4J2BZ-2S7LX-JUJ46-T2EJT-CZ4U6-2OFTR&coord_type=1`
-                // break;
             case '4':
                 setVisible(false)
                 break;
@@ -59,7 +54,6 @@ export default function BMapAssembly() {
                 <div onClick={barBtnCLick} className='bar-btn'>
                     <button i='1'>高德地图</button>
                     <button i='2'>百度地图</button>
-                    {/* <button i='3'>腾讯地图</button> */}
                     <button i='4'>取消</button>
                 </div>
             </Popup>
