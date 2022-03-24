@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { List, Button, Input, DotLoading } from 'antd-mobile'
+import Axios from 'axios'
 import ItemList from '../itemList';
 import './index.css';
 import { bd_decrypt } from '../utils';
 const JSON_DATA = require('../mock/index.json');
 const list = JSON.parse(JSON.stringify(JSON_DATA.data))
+
+let timer = null
 
 function Home() {
   const [defaultData, setDetaultData] = useState([])
@@ -13,7 +16,6 @@ function Home() {
   const [searchValue, setValue] = useState('')
   const [dom, setDom] = useState(HTMLDivElement | null);
   const [loading, setLoading] = useState(true);
-  const [locations, setLoactions] = useState({})
 
   const doSearch = () => {
     dom.scrollTop = 0
@@ -25,28 +27,57 @@ function Home() {
     }
   }
 
-  const getLocations = new Promise((res, rej) => {
-    var geolocation = new window.BMap.Geolocation();
-    geolocation.getCurrentPosition(function (r) {
-      if (this.getStatus() == window.BMAP_STATUS_SUCCESS) {
-        res(r.point)
-        return false;
-      }
-      else {
-        rej(this.getStatus())
-      }
-    }, { enableHighAccuracy: true });
-  })
-
-  const getList = useCallback(() => {
-    getLocations.then(res => {
-      const { lng, lat } = res;
-      setLoactions({ lng, lat })
+  const getList = () => {
+    const arr = list.map((item) => {
+      let dis = Math.floor(window.AMap.GeometryUtil.distance([window.BDlng, window.BDlat], [item.coordinate.gdLon, item.coordinate.gdLat]));
+      item.distance = dis
+      return item;
     })
-  }, [])
+    arr.sort((a, b) => {
+      return a.distance - b.distance
+    })
+    setDetaultData(arr)
+    setDistanceList(arr)
+    setTimeout(() => {
+      setLoading(false)
+    }, 500)
+  }
+
+  const getQueryLat = () => {
+    timer = setTimeout(() => {
+      if (!window.lat && !window.lng) {
+        getQueryLat()
+      } else {
+        alert(3)
+        clearTimeout(timer)
+        timer = null
+        const url = `https://api.map.baidu.com/geoconv/v1/?coords=${window.lng},${window.lat}&from=1&to=5&ak=RaD0EbdQKxU9KOOuKAMGYTZbtKAg3pjO`
+        // const url = `/geoconv/v1/?coords=${window.lng},${window.lat}&from=1&to=5&ak=RaD0EbdQKxU9KOOuKAMGYTZbtKAg3pjO`
+        Axios.get(url, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://api.map.baidu.com',
+            'Access-Control-Allow-Credentials': true,
+          }
+        }).then(res => {
+          alert(JSON.stringify(res))
+          if (res && res.data && res.data.result) {
+            const gdMap = bd_decrypt(res.data.result[0].y, res.data.result[0].x)
+            window.BDlng = res.data.result[0].x;
+            window.BDlat = res.data.result[0].y;
+            window.GDlng = gdMap.bd_lon;
+            window.GDlat = gdMap.bd_lat;
+            getList()
+          }
+        }).catch(err => {
+          alert(JSON.stringify(err))
+        })
+      }
+    }, 500)
+  }
 
   useEffect(() => {
-    getList()
+    getQueryLat()
   }, [])
 
   useEffect(() => {
@@ -56,27 +87,6 @@ function Home() {
       setData([])
     }
   }, [defaultData])
-
-  useEffect(() => {
-    if (Object.keys(locations).length > 0) {
-      const {lng,lat} = locations
-      window.lng = lng;
-      window.lat = lat;
-      const gdMap = bd_decrypt(lat, lng)
-      const arr = list.map((item) => {
-        let dis = Math.floor(window.AMap.GeometryUtil.distance([gdMap.bd_lon, gdMap.bd_lat], [item.coordinate.gdLon, item.coordinate.gdLat]));
-        item.distance = dis
-        return item;
-      })
-      arr.sort((a, b) => {
-        return a.distance - b.distance
-      })
-      setDetaultData(arr)
-      setDistanceList(arr)
-      setLoading(false)
-    }
-  }, [locations])
-
 
   const handleOnScroll = () => {
     if (dom) {

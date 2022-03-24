@@ -3,7 +3,7 @@ import { Popup } from 'antd-mobile'
 import { useEffect, useState } from 'react';
 import './index.css';
 
-import { parseQueryString, bd_decrypt, bMapTransqqMap } from '../utils';
+import { parseQueryString, bd_decrypt } from '../utils';
 import {MAP_ICON} from '../mock/icon'
 
 export default function BMapAssembly() {
@@ -20,14 +20,13 @@ export default function BMapAssembly() {
 
     const barBtnCLick = (e) => {
         e.stopPropagation()
-        const decrypt = bd_decrypt(window.lat,window.lng)
         const btnIndex = e.target.getAttribute('i')
         switch (btnIndex) {
             case '1':
-                window.location.href = `https://uri.amap.com/navigation?from=${decrypt.bd_lon},${decrypt.bd_lat},我的位置&to=${urlParams.gdLon},${urlParams.gdLat},${urlParams.address}&mode=walk&policy=1&src=mypage&coordinate=gaode&callnative=0`
+                window.location.href = `https://uri.amap.com/navigation?from=${window.GDlng},${window.GDlat},我的位置&to=${urlParams.gdLon},${urlParams.gdLat},${urlParams.address}&mode=walk&policy=1&src=mypage&coordinate=gaode&callnative=0`
                 break;
             case '2':
-                window.location.href = `https://api.map.baidu.com/direction?origin=latlng:${window.lat},${window.lng}|name:我的位置&destination=${urlParams.lat},${urlParams.lng}&mode=driving&region=深圳&output=html&src=webapp.baidu.openAPIdemo`
+                window.location.href = `https://api.map.baidu.com/direction?origin=latlng:${window.BDlat},${window.BDlng}|name:我的位置&destination=${urlParams.lat},${urlParams.lng}&mode=driving&region=深圳&output=html&src=webapp.baidu.openAPIdemo`
                 break;
             case '4':
                 setVisible(false)
