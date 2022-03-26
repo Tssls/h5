@@ -43,7 +43,7 @@ export default function ItemList(props) {
         <img src={MODAL_ICON} alt="" />
         <p>欢迎随时致电门店咨询</p>
         <a href={`tel:${ipone}`}>{ipone}</a>
-        <p>悦刻为保护双方隐私安全，号码已做加密处理</p>
+        {/* <p>悦刻为保护双方隐私安全，号码已做加密处理</p> */}
         <button onClick={()=>{setModal(false)}}>我知道了</button>
     </div>)
 

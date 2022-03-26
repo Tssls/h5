@@ -92,21 +92,17 @@
     width: 90vw !important;
 }
 
-.modal-text > p:nth-child(2){
+.modal-text > p{
     font-size: .21333rem;
     color: #333;
     font-weight: 700;
     margin:0 !important;
 }
 
-.modal-text > p:nth-child(4){
-    color: #666;
-    font-size: .16rem;
-    margin-top: 0.21333rem
-}
 
-.modal-text > a:nth-child(3){
-    margin-top: 0.02667rem;
+.modal-text > a{
+    display: block;
+    margin: 0.26rem 0;
     font-size: .29333rem;
     color: #00b578;
     font-weight: 500;
@@ -114,7 +110,8 @@
     margin-bottom: 0 !important;
 }
 
-.modal-text > button:nth-child(5){
+.modal-text > button{
+    display: block;
     width: 100%;
     height: 0.53333rem;
     font-size: .18667rem;
@@ -122,7 +119,7 @@
     font-weight: 500;
     background-color: #00b578;
     color: #fff;
-    margin-top: 0.13333rem;
+    margin-top: 0.3rem;
     border: none;
 }
 
