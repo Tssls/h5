@@ -17,20 +17,6 @@ export function parseQueryString(url) {
   return obj;
 }
 
-export function bd_decrypt(bd_lat, bd_lon) {
-  var X_PI = Math.PI * 3000.0 / 180.0;
-  var x = bd_lon - 0.0065;
-  var y = bd_lat - 0.006;
-  var z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * X_PI);
-  var theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * X_PI);
-  var gg_lng = z * Math.cos(theta);
-  var gg_lat = z * Math.sin(theta);
-  return {
-    bd_lat: gg_lat,
-    bd_lon: gg_lng
-  }
-}
-
 function Rad(d) {
   return d * Math.PI / 180.0; //经纬度转换成三角函数中度分表形式。
 }

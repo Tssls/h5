@@ -3,7 +3,7 @@ import { Popup } from 'antd-mobile'
 import { useEffect, useState } from 'react';
 import './index.css';
 
-import { parseQueryString, bd_decrypt } from '../utils';
+import { parseQueryString } from '../utils';
 import {MAP_ICON} from '../mock/icon'
 
 export default function BMapAssembly() {

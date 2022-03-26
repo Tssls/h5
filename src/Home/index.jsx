@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { List, Button, Input, DotLoading } from 'antd-mobile'
-import Axios from 'axios'
+import gcoord from 'gcoord'
 import ItemList from '../itemList';
 import './index.css';
-import { bd_decrypt } from '../utils';
 const JSON_DATA = require('../mock/index.json');
 const list = JSON.parse(JSON.stringify(JSON_DATA.data))
 
@@ -29,7 +28,7 @@ function Home() {
 
   const getList = () => {
     const arr = list.map((item) => {
-      let dis = Math.floor(window.AMap.GeometryUtil.distance([window.BDlng, window.BDlat], [item.coordinate.gdLon, item.coordinate.gdLat]));
+      let dis = Math.floor(window.AMap.GeometryUtil.distance([window.GDlng, window.GDlat], [item.coordinate.gdLon, item.coordinate.gdLat]));
       item.distance = dis
       return item;
     })
@@ -48,30 +47,23 @@ function Home() {
       if (!window.lat && !window.lng) {
         getQueryLat()
       } else {
-        alert(3)
         clearTimeout(timer)
         timer = null
-        const url = `https://api.map.baidu.com/geoconv/v1/?coords=${window.lng},${window.lat}&from=1&to=5&ak=RaD0EbdQKxU9KOOuKAMGYTZbtKAg3pjO`
-        // const url = `/geoconv/v1/?coords=${window.lng},${window.lat}&from=1&to=5&ak=RaD0EbdQKxU9KOOuKAMGYTZbtKAg3pjO`
-        Axios.get(url, {
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': 'https://api.map.baidu.com',
-            'Access-Control-Allow-Credentials': true,
-          }
-        }).then(res => {
-          alert(JSON.stringify(res))
-          if (res && res.data && res.data.result) {
-            const gdMap = bd_decrypt(res.data.result[0].y, res.data.result[0].x)
-            window.BDlng = res.data.result[0].x;
-            window.BDlat = res.data.result[0].y;
-            window.GDlng = gdMap.bd_lon;
-            window.GDlat = gdMap.bd_lat;
-            getList()
-          }
-        }).catch(err => {
-          alert(JSON.stringify(err))
-        })
+        var BDresult = gcoord.transform(
+          [113.89687625351715, 22.57724929459966],    
+          gcoord.WGS84,              
+          gcoord.BD09                  
+        );
+        var GDresult = gcoord.transform(
+          [113.89687625351715, 22.57724929459966], 
+          gcoord.WGS84,             
+          gcoord.GCJ02                   
+        );
+        window.BDlng = BDresult[0];
+        window.BDlat = BDresult[1];
+        window.GDlng = GDresult[0];
+        window.GDlat = GDresult[1];
+        getList()
       }
     }, 500)
   }
