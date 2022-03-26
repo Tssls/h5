@@ -50,12 +50,12 @@ function Home() {
         clearTimeout(timer)
         timer = null
         var BDresult = gcoord.transform(
-          [113.89687625351715, 22.57724929459966],    
+          [window.lng, window.lat],    
           gcoord.WGS84,              
           gcoord.BD09                  
         );
         var GDresult = gcoord.transform(
-          [113.89687625351715, 22.57724929459966], 
+          [window.lng, window.lat], 
           gcoord.WGS84,             
           gcoord.GCJ02                   
         );
