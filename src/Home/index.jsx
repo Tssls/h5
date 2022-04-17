@@ -13,11 +13,12 @@ function Home() {
   const [distanceList, setDistanceList] = useState([])
   const [data, setData] = useState([])
   const [searchValue, setValue] = useState('')
-  const [dom, setDom] = useState(HTMLDivElement | null);
+  // const [dom, setDom] = useState(HTMLDivElement | null);
   const [loading, setLoading] = useState(true);
+  // const [show, setShow] = useState(true);
 
   const doSearch = () => {
-    dom.scrollTop = 0
+    // dom.scrollTop = 0
     if (searchValue) {
       const jsonData = distanceList.filter(item => item.name.indexOf(searchValue) !== -1)
       setDetaultData(jsonData)
@@ -27,6 +28,7 @@ function Home() {
   }
 
   const getList = () => {
+    console.log('[window.GDlng, window.GDlat',window.GDlng, window.GDlat)
     const arr = list.map((item) => {
       let dis = Math.floor(window.AMap.GeometryUtil.distance([window.GDlng, window.GDlat], [item.coordinate.gdLon, item.coordinate.gdLat]));
       item.distance = dis
@@ -74,22 +76,22 @@ function Home() {
 
   useEffect(() => {
     if (defaultData.length > 0) {
-      setData(defaultData.slice(0, 10))
+      setData(defaultData.slice(0, 8))
     } else {
       setData([])
     }
   }, [defaultData])
 
-  const handleOnScroll = () => {
-    if (dom) {
-      const contentScrollTop = dom.scrollTop;
-      const clientHeight = dom.clientHeight;
-      const scrollHeight = dom.scrollHeight;
-      if (contentScrollTop + clientHeight + 10 >= scrollHeight && data.length < defaultData.length) {
-        setData(defaultData.slice(0, data.length + 10))
-      }
-    }
-  };
+  // const handleOnScroll = () => {
+  //   if (dom) {
+  //     const contentScrollTop = dom.scrollTop;
+  //     const clientHeight = dom.clientHeight;
+  //     const scrollHeight = dom.scrollHeight;
+  //     if (contentScrollTop + clientHeight + 10 >= scrollHeight && data.length < defaultData.length) {
+  //       setData(defaultData.slice(0, data.length + 10))
+  //     }
+  //   }
+  // };
 
   const searchChange = (e) => {
     setValue(e)
@@ -104,9 +106,10 @@ function Home() {
 
   return (
     <div className="App" >
-      <div onScrollCapture={handleOnScroll} ref={(dom) => {
+      {/* <div onScrollCapture={handleOnScroll} ref={(dom) => {
         setDom(dom);
-      }} className='box-scroll'>
+      }} className='box-scroll'> */}
+       <div className='box-scroll'>
         <div className="header">
           <Input onChange={searchChange} value={searchValue} placeholder='请输入店铺名称' clearable />
           <Button className='header-btn' size='small' onClick={doSearch}>

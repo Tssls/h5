@@ -3,13 +3,14 @@
     margin-top: 0.2rem;
     border-radius: 0.134rem;
     box-shadow: 0 0.02667rem 0.08rem 0 rgb(0 0 0 / 8%);
-    padding: 0.34rem 0.21rem 0.186rem;
+    padding: 0.20rem 0.21rem 0.186rem;
 }
 
 .item-list-title{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 0.14rem;
 }
 
 .item-list-title > span:last-child{
