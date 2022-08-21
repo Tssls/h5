@@ -2,9 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { List, Button, Input, DotLoading } from 'antd-mobile'
 import gcoord from 'gcoord'
 import ItemList from '../itemList';
+import { xhrApiQuery } from '../xhr';
 import './index.css';
-const JSON_DATA = require('../mock/index.json');
-const list = JSON.parse(JSON.stringify(JSON_DATA.data))
 
 let timer = null
 
@@ -13,35 +12,37 @@ function Home() {
   const [distanceList, setDistanceList] = useState([])
   const [data, setData] = useState([])
   const [searchValue, setValue] = useState('')
-  // const [dom, setDom] = useState(HTMLDivElement | null);
   const [loading, setLoading] = useState(true);
-  // const [show, setShow] = useState(true);
+
+  const getQuery = () => {
+    xhrApiQuery().then(res => {
+      if (res.status === 200) {
+        const arr = res.data.map((item) => {
+          const gd = item.gd_coordinate.split(',');
+          let dis = Math.floor(window.AMap.GeometryUtil.distance([window.GDlng, window.GDlat], gd));
+          item.distance = dis
+          return item;
+        })
+        arr.sort((a, b) => {
+          return a.distance - b.distance
+        })
+        setDetaultData(arr)
+        setDistanceList(arr)
+      }
+    }).catch(err => {
+      console.log('err', err);
+    }).finally(() => {
+      setLoading(false);
+    })
+  }
 
   const doSearch = () => {
-    // dom.scrollTop = 0
     if (searchValue) {
       const jsonData = distanceList.filter(item => item.name.indexOf(searchValue) !== -1)
       setDetaultData(jsonData)
     } else {
       setDetaultData(distanceList)
     }
-  }
-
-  const getList = () => {
-    console.log('[window.GDlng, window.GDlat',window.GDlng, window.GDlat)
-    const arr = list.map((item) => {
-      let dis = Math.floor(window.AMap.GeometryUtil.distance([window.GDlng, window.GDlat], [item.coordinate.gdLon, item.coordinate.gdLat]));
-      item.distance = dis
-      return item;
-    })
-    arr.sort((a, b) => {
-      return a.distance - b.distance
-    })
-    setDetaultData(arr)
-    setDistanceList(arr)
-    setTimeout(() => {
-      setLoading(false)
-    }, 500)
   }
 
   const getQueryLat = () => {
@@ -65,7 +66,7 @@ function Home() {
         window.BDlat = BDresult[1];
         window.GDlng = GDresult[0];
         window.GDlat = GDresult[1];
-        getList()
+        getQuery();
       }
     }, 500)
   }
@@ -82,17 +83,6 @@ function Home() {
     }
   }, [defaultData])
 
-  // const handleOnScroll = () => {
-  //   if (dom) {
-  //     const contentScrollTop = dom.scrollTop;
-  //     const clientHeight = dom.clientHeight;
-  //     const scrollHeight = dom.scrollHeight;
-  //     if (contentScrollTop + clientHeight + 10 >= scrollHeight && data.length < defaultData.length) {
-  //       setData(defaultData.slice(0, data.length + 10))
-  //     }
-  //   }
-  // };
-
   const searchChange = (e) => {
     setValue(e)
   }
@@ -106,9 +96,6 @@ function Home() {
 
   return (
     <div className="App" >
-      {/* <div onScrollCapture={handleOnScroll} ref={(dom) => {
-        setDom(dom);
-      }} className='box-scroll'> */}
        <div className='box-scroll'>
         <div className="header">
           <Input onChange={searchChange} value={searchValue} placeholder='请输入店铺名称' clearable />
